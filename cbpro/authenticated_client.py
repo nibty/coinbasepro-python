@@ -211,6 +211,7 @@ class AuthenticatedClient(PublicClient):
             product_id (str): Product to order (eg. 'BTC-USD')
             side (str): Order side ('buy' or 'sell)
             order_type (str): Order type ('limit', or 'market')
+            **profile_id (str): Create order on a specific profile_id (defaults to default profile)
             **client_oid (str): Order ID selected by you to identify your order.
                 This should be a UUID, which will be broadcast in the public
                 feed for `received` messages.
@@ -323,6 +324,7 @@ class AuthenticatedClient(PublicClient):
         return self.place_order(product_id, 'sell', order_type, **kwargs)
 
     def place_limit_order(self, product_id, side, price, size,
+                          profile_id=None,
                           client_oid=None,
                           stp=None,
                           time_in_force=None,
@@ -337,6 +339,7 @@ class AuthenticatedClient(PublicClient):
             side (str): Order side ('buy' or 'sell)
             price (Decimal): Price per cryptocurrency
             size (Decimal): Amount of cryptocurrency to buy or sell
+            profile_id (Optional[str]): Create order on a specific profile_id
             client_oid (Optional[str]): User-specified Order ID
             stp (Optional[str]): Self-trade prevention flag. See `place_order`
                 for details.
@@ -367,6 +370,7 @@ class AuthenticatedClient(PublicClient):
                   'order_type': 'limit',
                   'price': price,
                   'size': size,
+                  'profile_id': profile_id,
                   'client_oid': client_oid,
                   'stp': stp,
                   'time_in_force': time_in_force,
@@ -379,6 +383,7 @@ class AuthenticatedClient(PublicClient):
         return self.place_order(**params)
 
     def place_market_order(self, product_id, side, size=None, funds=None,
+                           profile_id=None,
                            client_oid=None,
                            stp=None,
                            overdraft_enabled=None,
@@ -392,6 +397,7 @@ class AuthenticatedClient(PublicClient):
                 `funds`.
             funds (Optional[Decimal]): Desired amount of quote currency to use.
                 Specify this or `size`.
+            profile_id (Optional[str]): Create order on a specific profile_id
             client_oid (Optional[str]): User-specified Order ID
             stp (Optional[str]): Self-trade prevention flag. See `place_order`
                 for details.
@@ -411,6 +417,7 @@ class AuthenticatedClient(PublicClient):
                   'order_type': 'market',
                   'size': size,
                   'funds': funds,
+                  'profile_id': profile_id,
                   'client_oid': client_oid,
                   'stp': stp,
                   'overdraft_enabled': overdraft_enabled,
@@ -420,6 +427,7 @@ class AuthenticatedClient(PublicClient):
         return self.place_order(**params)
 
     def place_stop_order(self, product_id, stop_type, price, size=None, funds=None,
+                         profile_id=None,
                          client_oid=None,
                          stp=None,
                          overdraft_enabled=None,
@@ -436,6 +444,7 @@ class AuthenticatedClient(PublicClient):
                 `funds`.
             funds (Optional[Decimal]): Desired amount of quote currency to use.
                 Specify this or `size`.
+            profile_id (Optional[str]): Create order on a specific profile_id
             client_oid (Optional[str]): User-specified Order ID
             stp (Optional[str]): Self-trade prevention flag. See `place_order`
                 for details.
@@ -466,6 +475,7 @@ class AuthenticatedClient(PublicClient):
                   'stop_price': price,
                   'size': size,
                   'funds': funds,
+                  'profile_id': profile_id,
                   'client_oid': client_oid,
                   'stp': stp,
                   'overdraft_enabled': overdraft_enabled,
