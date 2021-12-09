@@ -1103,4 +1103,4 @@ class AuthenticatedClient(PublicClient):
                     }
                 ]
         """
-        return self._send_message('get', '/profiles?active=' + active)
+        return self._send_message('get', '/profiles?active=' + str(active).lower())
