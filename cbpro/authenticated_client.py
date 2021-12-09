@@ -1047,3 +1047,48 @@ class AuthenticatedClient(PublicClient):
                 }
         """
         return self._send_message('get', '/fees')
+
+    def get_profile(self, profile_id=None, active=True):
+        """ Get information for a single account profile.
+
+        Use this endpoint when you know the profile_id.
+
+        Args:
+            profile_id (str): Profile id for the profile you want to get.
+            active (bool): Return active profiles only when true
+
+        Returns:
+            dict: Account information. Example::
+                {
+                    "id": "8058d771-2d88-4f0f-ab6e-299c153d4308",
+                    "user_id": "5cf6e115aaf44503db300f1e",
+                    "name": "default",
+                    "active": true,
+                    "is_default": true,
+                    "created_at": "2019-06-04T21:22:32.226461Z",
+                    "has_margin": true
+                }
+        """
+        return self._send_message('get', '/profiles/' + profile_id + '?active=' + active)
+
+    def get_profiles(self, active=True):
+        """ Gets a list of all the current user's profiles.
+
+        Returns:
+            list: Info about all account profiles. Example::
+                [
+                    {
+                        "id": "8058d771-2d88-4f0f-ab6e-299c153d4308",
+                        "user_id": "5cf6e115aaf44503db300f1e",
+                        "name": "default",
+                        "active": true,
+                        "is_default": true,
+                        "created_at": "2019-06-04T21:22:32.226461Z",
+                        "has_margin": true
+                    },
+                    {
+                        ...
+                    }
+                ]
+        """
+        return self.get_profile(active=active)
