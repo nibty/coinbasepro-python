@@ -1058,14 +1058,13 @@ class AuthenticatedClient(PublicClient):
         """
         return self._send_message('get', '/fees')
 
-    def get_profile(self, profile_id=None, active=True):
+    def get_profile(self, profile_id):
         """ Get information for a single account profile.
 
         Use this endpoint when you know the profile_id.
 
         Args:
             profile_id (str): Profile id for the profile you want to get.
-            active (bool): Return active profiles only when true
 
         Returns:
             dict: Account information. Example::
@@ -1079,10 +1078,13 @@ class AuthenticatedClient(PublicClient):
                     "has_margin": true
                 }
         """
-        return self._send_message('get', '/profiles/' + profile_id + '?active=' + active)
+        return self._send_message('get', '/profiles/' + profile_id)
 
     def get_profiles(self, active=True):
         """ Gets a list of all the current user's profiles.
+
+        Args:
+            active (bool)
 
         Returns:
             list: Info about all account profiles. Example::
@@ -1101,4 +1103,4 @@ class AuthenticatedClient(PublicClient):
                     }
                 ]
         """
-        return self.get_profile(active=active)
+        return self._send_message('get', '/profiles?active=' + active)
