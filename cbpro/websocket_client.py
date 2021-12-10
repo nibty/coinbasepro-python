@@ -57,7 +57,7 @@ class WebsocketClient(object):
         self.stop = False
         self.on_open()
         self.thread = Thread(target=_go)
-        self.keepalive = Thread(target=self._keepalive)
+        self.keepalive = Thread(target=self._keepalive, daemon=True)
         self.thread.start()
 
     def _connect(self):
@@ -112,8 +112,6 @@ class WebsocketClient(object):
                 self.ws.close()
         except WebSocketConnectionClosedException as e:
             pass
-        finally:
-            self.keepalive.join()
 
         self.on_close()
 
